@@ -1,0 +1,36 @@
+
+
+-------------- Segunda entrega del proyecto -------------
+
+Cada archivo JS esta vinculado con el html que corresponde, en esta entrega ya el proyecto
+ademas de tener la estructura, variables y objetos. Tiene interacción con el HTML usando DOM y Eventos,
+por lo que podra calificar tambien abriendo el sitio con Open whidt Live Server para ver su funcionalidad.
+Todos los HTML estan linkeados asi que podra navegar en el sitio sin problema.
+
+POR FAVOR VEA LA PAGINA COMO CONSUMIDOR E INTERACTUE.
+
+1) Index (Linkeado con main.js):
+ - Contiene ingreso de usuario y contraseña por pormpt (user: admin pass: admin).
+ - Contiene validacion de mayoria de edad por pormpt. Si es mayor de 18 años informara
+ que puede comprar por alert y si es menor de 18 un else.
+
+2) Productos (Linkeado con productos.js): 
+ - En la seccion productos del sitio encontrara un objeto de productos.
+ - Las const con todos los productos agregados con los datos del objeto.
+ - Array de los productos.
+ - Funciones para sumar Stock de Productos (Solo sume Stock a 2 productos para no hacerlo tan largo).
+ - Filtro de productos. (Filtra todos los productos por nombre en el buscador del nav).
+
+ 3) Formulario (Linkeado con contacto.js):
+  - El formulario de contancto retorna todos los datos ingrsados por la consola (console.log). 
+    > Nombre
+    > Apellido
+    > E - Mail
+    > Telefono
+    > Mensaje
+
+
+Espero cualquier devolucion para mejorar, si es posible en la devolucion ayudarme a que me funcione el 
+boton de Search del buscador, hasta ahora lo tengo filtrando solo al escribir. 
+
+POR FAVOR VEA LA PAGINA COMO CONSUMIDOR E INTERACTUE.

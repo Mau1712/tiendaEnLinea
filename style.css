@@ -1,0 +1,66 @@
+body {
+    background-image: url(imagenes/fondo-section.png);
+}
+
+.portadaPrincipal {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 450px;
+}
+
+.shoppingCart {
+    width: 35px;
+    height: 35px;
+    margin-right: 25px;
+
+}
+
+#busqueda {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+
+}
+
+.card {
+    margin-top: 40px;
+}
+
+.formularioDeContacto {
+    display: flex;
+    align-items: center;
+    margin-top: 80px;
+    flex-direction: column;
+}
+
+input {
+    width: 100%;
+}
+
+#irAlFormulario {
+    background-color: antiquewhite;
+    border: solid 2px rgb(0, 0, 0);
+    padding: 10px;
+}
+
+
+#newUserForm {
+    width: 400px;
+}
+
+.newUser {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 100px;
+
+}
+
+
+.inSesion {
+    margin-top: 0px;
+}
+
+
