@@ -7,7 +7,7 @@ class Producto {
         this.precio = precio;
         this.imagen = imagen;
         this.tipo = tipo;
-        this.cantidad = 10;
+        this.cantidad = 1;
         this.idproducto = idproducto;
 
     }
@@ -34,7 +34,7 @@ const ronSantaTeresa = new Producto("Ron Santa Teresa 1796", 7350, "imagenes/pro
 const whiskyBuchanan = new Producto("Whisky Buchanan", 12550, "imagenes/productos/buchanans.jpg", "Whisky", 11);
 const whiskyOldParr = new Producto("Whisky Old Parr", 7850, "imagenes/productos/Old_parr.png", "Whisky", 12);
 const whiskyChivasRegal = new Producto("Whisky Chivas Regal", 7850, "imagenes/productos/chivas-regal.jpg", "Whisky", 13);
-const whiskyJohnnieWalker = new Producto("Whisky Johnnie Walker Red Label", 6850, "imagenes/productos/whisky_johnnie_walker_red_label.jpg", "Whisky", 14);
+const whiskyJohnnieWalker = new Producto("Johnnie Walker Red Label", 6850, "imagenes/productos/whisky_johnnie_walker_red_label.jpg", "Whisky", 14);
 const vodkaAbsolut = new Producto("Vodka Absolut", 2650, "imagenes/productos/absolut.jpg", "Vodka", 15);
 const vodkaSmirnoff = new Producto("Vodka Smirnoff", 1800, "imagenes/productos/smirnoff.png", "Vodka", 16);
 const vodkaCiroc = new Producto("Vodka Ciroc", 1600, "imagenes/productos/ciroc.jpg", "Vodka", 17);
@@ -43,81 +43,151 @@ const vodkaSernova = new Producto("Vodka Sernova + Speed", 1700, "imagenes/produ
 
 /* Array de productos */
 
-const stockProductos = [sixPackHeineken, sixPackCorona, twelvePackBudweiser, sixPackbrahma, sixPackSchneider, 
-    sixPackQuilmes, ronDiplomaticoReserva, ronBacardiAñejo, ronBarceló, ronSantaTeresa, whiskyBuchanan, whiskyOldParr, 
-    whiskyChivasRegal, whiskyJohnnieWalker, vodkaAbsolut, vodkaSmirnoff, vodkaCiroc, vodkaSernova, ];
+const stockProductos = [sixPackHeineken, sixPackCorona, twelvePackBudweiser, sixPackbrahma, sixPackSchneider,
+    sixPackQuilmes, ronDiplomaticoReserva, ronBacardiAñejo, ronBarceló, ronSantaTeresa, whiskyBuchanan, whiskyOldParr,
+    whiskyChivasRegal, whiskyJohnnieWalker, vodkaAbsolut, vodkaSmirnoff, vodkaCiroc, vodkaSernova,];
 
 console.log(stockProductos);
 
-/* Aumentar Stock */
 
-function aumentarStockCorona(arrayProducto) {
-    for (let producto of arrayProducto) {
-        if(producto.nombre === "Six Pack Corona") {
-            producto.sumarStock(23);
-        }
-    }
+
+/* Creando carrito */
+
+let carrito = [];
+
+//tomar del localStorage.
+
+if(localStorage.getItem("carrito")) {
+    carrito = JSON.parse(localStorage.getItem("carrito"));
 }
-aumentarStockCorona(stockProductos);
-console.log(stockProductos);
 
+const contenedorProductos = document.getElementById("contenedorProductos");
 
-function aumentarStockHeineken(arrayProducto) {
-    for (let producto of arrayProducto) {
-        if(producto.precio === "Six Pack Heineken") {
-            producto.sumarStock(17);
-        }
-    }
-}
-aumentarStockHeineken(stockProductos);
-
-
-
-
-/* Buscador */
-
-const busqueda = document.getElementById("busqueda");
-
-const ingresaBusqueda = document.getElementById("ingresaBusqueda");
-
-const filtrar = () =>{
-
-    busqueda.innerHTML = '';
-    
-    const texto = ingresaBusqueda.value.toLowerCase();
-    for ( let producto of stockProductos ){
-        let nombre = producto.nombre.toLowerCase();
-
-        if ( nombre.indexOf(texto) !== -1){
-            busqueda.innerHTML += `
-            
-        <div class="card" style="width: 18rem;" id="resultado">
-            <img src=${producto.imagen} class="card-img-top" alt="...">
+const mostrarProductos = () => {
+    stockProductos.forEach((producto) => {
+        const card = document.createElement("div");
+        card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
+        card.innerHTML = `
+        <div class="card">
+            <img src=${producto.imagen} class="card-img-top" alt="${producto.nombre}">
             <div class="card-body">
                 <h5 class="card-title"> ${producto.nombre}</h5>
                 <h5 class="card-title">Precio: $ ${producto.precio}</h5>
                 <h5 class="card-title"> Licor: ${producto.tipo}</h5>
-                <p class="card-text">Stock: ${producto.cantidad}</p>
-                <a href="#" class="btn btn-success" id= ${producto.idproducto} >Agrgar al carrito</a>
+                
+                <button class="btn btn-success" id="boton${producto.idproducto}">Agrgar al carrito</button>
             </div>
         </div>
-            `
-        }
+        `
+        contenedorProductos.appendChild(card);
 
-    }
-    if ( busqueda.innerHTML === '' ){
-        busqueda.innerHTML = `<li>Producto no encontrado</li>`
-    }
-
-    const boton = document.getElementById(`boton${progucto.idproducto}`);
-    boton.addEventListener("click", () => {
-
+        const boton = document.getElementById(`boton${producto.idproducto}`);
+        boton.addEventListener("click", () => {
+            agregarAlCarrito(producto.idproducto)
+        })
     })
+}
+
+const agregarAlCarrito = (id) => {
+    const producto = stockProductos.find((producto) => producto.idproducto === id);
+    const productoEnCarrito = carrito.find((producto) => producto.idproducto === id)
+    if(productoEnCarrito){
+        productoEnCarrito.cantidad++;
+    }else{
+        carrito.push(producto);
+
+        localStorage.setItem("carrito", JSON.stringify(carrito));
+    }
+
+    sumaTotal();
+
+    mostrarCarrito();
+
+    sumaBurbuja()
 
 }
 
-ingresaBusqueda.addEventListener('keyup', filtrar)
-filtrar();
+mostrarProductos();
+
+const contenedorCarrito = document.getElementById("contenedorCarrito");
+const verCarrito = document.getElementById("verCarrito");
+
+verCarrito.addEventListener("click", () => {
+    mostrarCarrito();
+    
+})
 
 
+const mostrarCarrito = () => {
+    contenedorCarrito.innerHTML="";
+    carrito.forEach((producto) => {
+        const card = document.createElement("div");
+        card.innerHTML = `
+        <div class="card">
+            
+            <div class="card-body">
+                <h5 class="card-title"> ${producto.nombre}</h5>
+                <h5 class="card-title">Precio: $ ${producto.precio}</h5>
+                <p class="card-text">Cantidad: ${producto.cantidad}</p>
+                <button class="btn btn-success" id="eliminar${producto.idproducto}">Eliminar Producto</button>
+            </div>
+        </div>
+        `
+        contenedorCarrito.appendChild(card); 
+
+        const boton = document.getElementById(`eliminar${producto.idproducto}`);
+        boton.addEventListener("click", () => {
+            eliminarDelCarrito(producto.idproducto)
+        })
+    })
+
+    sumaTotal();
+}
+
+const eliminarDelCarrito = (id) => {
+    const producto = carrito.find((producto) => producto.idproducto === id);
+    const indice = carrito.indexOf(producto);
+    carrito.splice(indice, 1);
+    mostrarCarrito();
+
+    localStorage.setItem("carrito", JSON.stringify(carrito));
+}
+
+const vaciarCarrito = document.getElementById("vaciarCarrito");
+
+vaciarCarrito.addEventListener("click", () => {
+    eliminarTodo();
+})
+
+const eliminarTodo = () => {
+    carrito = [];
+    mostrarCarrito();
+
+    localStorage.clear();
+}
+
+const total = document.getElementById("total");
+
+const sumaTotal = () => {
+    let totalCompra = 0;
+
+    carrito.forEach((producto) => {
+        totalCompra += producto.precio * producto.cantidad;
+    })
+
+    total.innerHTML = ` $${totalCompra}`;
+}
+
+
+const burbujaCarrito = document.getElementById("burbujaCarrito");
+
+const sumaBurbuja = () => {
+    let totalBurbuja = 0;
+
+    carrito.forEach((producto) =>{
+        totalBurbuja = producto.cantidad;
+    })
+
+    burbujaCarrito.innerHTML = `${totalBurbuja}`;
+}
 
