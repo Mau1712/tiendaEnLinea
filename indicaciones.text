@@ -10,7 +10,7 @@ Todos los HTML estan linkeados asi que podra navegar en el sitio sin problema.
 POR FAVOR VEA LA PAGINA COMO CONSUMIDOR E INTERACTUE.
 
 1) Index (Linkeado con main.js):
- - Contiene ingreso de usuario y contraseña por pormpt (user: admin pass: admin).
+ - Contiene ingreso de usuario y contraseña por prompt (user: admin pass: admin).
  - Contiene validacion de mayoria de edad por pormpt. Si es mayor de 18 años informara
  que puede comprar por alert y si es menor de 18 un else.
 
@@ -34,3 +34,30 @@ Espero cualquier devolucion para mejorar, si es posible en la devolucion ayudarm
 boton de Search del buscador, hasta ahora lo tengo filtrando solo al escribir. 
 
 POR FAVOR VEA LA PAGINA COMO CONSUMIDOR E INTERACTUE.
+
+
+---------------------- TERCERA ENTREGA ---------------------- 
+
+
+1) Se actualizo el inicio de sesion utilizado el DOM para eliminar los prompt y alert.
+2) Incorpore formulario de contacto que se almacena en el localStorage, interactua mediante DOM.
+3) Incorpore carro de compras, modificando el HTML con inner.HTML "Las card las traje
+de bootstrap y el Offcanvas tambien" (Se guarda en localStorage).
+4) Funciones para eliminar productos, para aumentar su cantidad en el carro y sumar monto total,
+vaciar carro y agregar productos.
+5) Incorpore SweetAlert en los botones de elimar y vaciar carrito.
+6) Uso de eventos (click). 
+
+Ver como usuario.
+
+user: admin
+pass: admin
+
+Me falta completar y modificar algunos formularios como el de registro para que tome los datos
+del localStorage y sean autorizados para ingresar, no lo he realizado porque estoy viendo la
+manera de que los datos se almacenen en otro lado para que sean permanentes y tomarlos de alli, 
+ya que el localStorage puede borrarse y ya no seria un usuario autorizado. 
+
+Elimine el buscador que habia integrado anteriormente porque me estaba causando problemas,
+pronto lo agregare sin errores de nuevo. 
+
