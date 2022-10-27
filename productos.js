@@ -19,6 +19,8 @@ class Producto {
 }
 
 
+
+
 /* Productos */
 
 const sixPackHeineken = new Producto("Six Pack Heineken", 1800, "imagenes/productos/Six-Pack-Heineken.png", "Cerveza", 1);
@@ -57,7 +59,7 @@ let carrito = [];
 
 //tomar del localStorage.
 
-if(localStorage.getItem("carrito")) {
+if (localStorage.getItem("carrito")) {
     carrito = JSON.parse(localStorage.getItem("carrito"));
 }
 
@@ -68,7 +70,7 @@ const mostrarProductos = () => {
         const card = document.createElement("div");
         card.classList.add("col-xl-3", "col-md-6", "col-xs-12");
         card.innerHTML = `
-        <div class="card">
+        <div class="card" style="width: 17rem;">
             <img src=${producto.imagen} class="card-img-top" alt="${producto.nombre}">
             <div class="card-body">
                 <h5 class="card-title"> ${producto.nombre}</h5>
@@ -91,9 +93,9 @@ const mostrarProductos = () => {
 const agregarAlCarrito = (id) => {
     const producto = stockProductos.find((producto) => producto.idproducto === id);
     const productoEnCarrito = carrito.find((producto) => producto.idproducto === id)
-    if(productoEnCarrito){
+    if (productoEnCarrito) {
         productoEnCarrito.cantidad++;
-    }else{
+    } else {
         carrito.push(producto);
 
         localStorage.setItem("carrito", JSON.stringify(carrito));
@@ -114,30 +116,52 @@ const verCarrito = document.getElementById("verCarrito");
 
 verCarrito.addEventListener("click", () => {
     mostrarCarrito();
-    
+
 })
 
 
 const mostrarCarrito = () => {
-    contenedorCarrito.innerHTML="";
+    contenedorCarrito.innerHTML = "";
     carrito.forEach((producto) => {
         const card = document.createElement("div");
         card.innerHTML = `
-        <div class="card">
-            
+        <div class="card" >
+        
             <div class="card-body">
                 <h5 class="card-title"> ${producto.nombre}</h5>
-                <h5 class="card-title">Precio: $ ${producto.precio}</h5>
+                <h5 class="card-title fs-6">Precio: $ ${producto.precio}</h5>
                 <p class="card-text">Cantidad: ${producto.cantidad}</p>
                 <button class="btn btn-success" id="eliminar${producto.idproducto}">Eliminar Producto</button>
             </div>
         </div>
         `
-        contenedorCarrito.appendChild(card); 
+        contenedorCarrito.appendChild(card);
 
         const boton = document.getElementById(`eliminar${producto.idproducto}`);
         boton.addEventListener("click", () => {
-            eliminarDelCarrito(producto.idproducto)
+            /* SWEET ALERT */
+            Swal.fire({
+                title: '¿Desea eliminar este producto?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Si, eliminar!',
+                confirmButtonColor: '#275c27',
+                cancelButtonText: `Cancelar`,
+                cancelButtonColor: '#d33',
+
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    Swal.fire({
+                        title: 'Eliminado',
+                        icon: 'success',
+                        confirmButtonText: 'Ok',
+                        confirmButtonColor: '#275c27'
+
+                    })
+
+                    eliminarDelCarrito(producto.idproducto)
+                }
+            })
         })
     })
 
@@ -156,7 +180,27 @@ const eliminarDelCarrito = (id) => {
 const vaciarCarrito = document.getElementById("vaciarCarrito");
 
 vaciarCarrito.addEventListener("click", () => {
-    eliminarTodo();
+
+    Swal.fire({
+        title: '¿Desea vaciar el carrito?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, vaciar!',
+        confirmButtonColor: '#275c27',
+        cancelButtonText: `Cancelar`,
+        cancelButtonColor: '#d33',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Se eliminaron todos los productos!',
+                icon: 'success',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#275c27'               
+            })
+            eliminarTodo();
+        }
+    })
+
 })
 
 const eliminarTodo = () => {
@@ -184,10 +228,13 @@ const burbujaCarrito = document.getElementById("burbujaCarrito");
 const sumaBurbuja = () => {
     let totalBurbuja = 0;
 
-    carrito.forEach((producto) =>{
+    carrito.forEach((producto) => {
         totalBurbuja = producto.cantidad;
     })
 
     burbujaCarrito.innerHTML = `${totalBurbuja}`;
 }
+
+
+
 
