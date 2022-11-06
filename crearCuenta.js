@@ -8,7 +8,6 @@ class Usuario {
         this.contrasenia = contrasenia;
     }
 
-
 }
 
 const usuarios = [];
@@ -33,5 +32,7 @@ newUserForm.addEventListener("submit", (e) => {
     newUserForm.reset();
 
 })
+
+
 
 

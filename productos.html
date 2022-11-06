@@ -13,6 +13,9 @@
     <!-- AnimateCSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 
+    <!-- Toastify -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <!-- Css Local -->
     <link rel="stylesheet" href="style.css">
 
@@ -31,9 +34,7 @@
                 </button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="inicio.html">Inicio</a>
-                        </li>
+                        
                         <li class="nav-item">
                             <a class="nav-link active" href="contacto.html">Contacto</a>
                         </li>
@@ -44,15 +45,19 @@
                             <a class="nav-link active" href="#">VIP Store</a>
                         </li>
 
+
                     </ul>
 
                     <!-- Boton para mostrar carrito -->
 
+
+
                     <button class="btn position-relative" id="verCarrito" type="button" data-bs-toggle="offcanvas"
                         data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">
                         <img src="imagenes/shopping-cart.png" class="shoppingCart" alt="">
-                        <span id="burbujaCarrito" class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-success">
-                            
+                        <span id="burbujaCarrito"
+                            class="position-absolute top-0 start-0 translate-middle badge rounded-pill bg-success">
+
                             <span class="visually-hidden">unread messages</span>
                         </span>
                     </button>
@@ -73,6 +78,8 @@
     <div class="tituloProductos">
         <h4>PRODUCTOS</h4>
         <p>Delivery incluido si tu compra supera los $ 5.000,00.-</p>
+        <p>Paga en USD a la mejor cotizacion del mercado</p>
+        <div id="precioDolar"></div>
     </div>
 
 
@@ -100,9 +107,10 @@
             <br>
 
             <h4>Total:<samp id="total"></samp></h4>
+            <h6>Total USD:<samp id="totalUsd"></samp></h6>
 
             <button class="btn btn-danger" id="vaciarCarrito">Vaciar Carrito</button>
-            <button class="btn btn-success">Comprar</button>
+            <button class="btn btn-success" id="comprar">Comprar</button>
 
         </div>
 
@@ -117,8 +125,11 @@
         integrity="sha384-OERcA2EqjJCMA+/3y+gxIOqMEjwtxJY7qPCqsdltbNJuaOe923+mo//f6V8Qbsw3"
         crossorigin="anonymous"></script>
 
-        <!-- Sweet Alert -->
-        <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <!-- toastify -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
+
+    <!-- Sweet Alert -->
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     <script src="productos.js"></script>
 </body>

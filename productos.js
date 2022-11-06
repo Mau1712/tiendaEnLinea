@@ -64,7 +64,9 @@ if (localStorage.getItem("carrito")) {
 }
 
 const contenedorProductos = document.getElementById("contenedorProductos");
+const listaProductos = "productos.json";
 
+    
 const mostrarProductos = () => {
     stockProductos.forEach((producto) => {
         const card = document.createElement("div");
@@ -76,7 +78,7 @@ const mostrarProductos = () => {
                 <h5 class="card-title"> ${producto.nombre}</h5>
                 <h5 class="card-title">Precio: $ ${producto.precio}</h5>
                 <h5 class="card-title"> Licor: ${producto.tipo}</h5>
-                
+
                 <button class="btn btn-success" id="boton${producto.idproducto}">Agrgar al carrito</button>
             </div>
         </div>
@@ -86,6 +88,17 @@ const mostrarProductos = () => {
         const boton = document.getElementById(`boton${producto.idproducto}`);
         boton.addEventListener("click", () => {
             agregarAlCarrito(producto.idproducto)
+
+            Toastify({
+
+                text: "Producto agregado",
+                duration: 3000,
+                gravity: "bottom",
+                position: "right",
+                style: {
+                    background: "linear-gradient(to right, #00b09b, #96c93d)",
+                }
+            }).showToast();
         })
     })
 }
@@ -102,9 +115,7 @@ const agregarAlCarrito = (id) => {
     }
 
     sumaTotal();
-
     mostrarCarrito();
-
     sumaBurbuja()
 
 }
@@ -161,11 +172,14 @@ const mostrarCarrito = () => {
 
                     eliminarDelCarrito(producto.idproducto)
                 }
+
+
             })
         })
     })
 
     sumaTotal();
+    pesoDolar();
 }
 
 const eliminarDelCarrito = (id) => {
@@ -195,7 +209,7 @@ vaciarCarrito.addEventListener("click", () => {
                 title: 'Se eliminaron todos los productos!',
                 icon: 'success',
                 confirmButtonText: 'Ok',
-                confirmButtonColor: '#275c27'               
+                confirmButtonColor: '#275c27'
             })
             eliminarTodo();
         }
@@ -236,5 +250,59 @@ const sumaBurbuja = () => {
 }
 
 
+const criptoCotizacion = "https://criptoya.com/api/dolar";
+
+const precioUsd = document.getElementById("precioDolar");
 
 
+
+setInterval(() => {
+    fetch(criptoCotizacion)
+        .then(Response => Response.json())
+        .then(({ blue }) => {
+
+            precioDolar.innerHTML = `<p>$ ${blue} </p>`
+
+
+        }).catch(error => console.log(error))
+}, 3000)
+
+
+
+const totalUsd = document.getElementById("totalUsd")
+
+const pesoDolar = () => {
+    let totalCompraUsd = 0;
+
+    carrito.forEach((producto) => {
+        totalCompraUsd += (producto.precio * producto.cantidad / 289)
+    })
+
+    totalUsd.innerHTML = ` $${totalCompraUsd}`;
+}
+
+
+const comprar = document.getElementById("comprar")
+
+comprar.addEventListener("click", () => {
+    Swal.fire({
+        title: '¿Desea reazlizar esta compra?',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Si, comprar!',
+        confirmButtonColor: '#275c27',
+        cancelButtonText: `Cancelar`,
+        cancelButtonColor: '#d33',
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: '¡¡Felicidades!! se cargó el pago a su tarjeta de credito',
+                text: `Pedido en camino`,
+                icon: 'success',
+                confirmButtonText: 'Ok',
+                confirmButtonColor: '#275c27'
+            })
+            eliminarTodo();
+        }
+    })
+})
