@@ -11,11 +11,6 @@ class Producto {
         this.idproducto = idproducto;
 
     }
-
-
-    sumarStock(cantidad) {
-        this.cantidad = this.cantidad + cantidad;
-    }
 }
 
 
@@ -64,9 +59,8 @@ if (localStorage.getItem("carrito")) {
 }
 
 const contenedorProductos = document.getElementById("contenedorProductos");
-const listaProductos = "productos.json";
 
-    
+
 const mostrarProductos = () => {
     stockProductos.forEach((producto) => {
         const card = document.createElement("div");
@@ -110,7 +104,6 @@ const agregarAlCarrito = (id) => {
         productoEnCarrito.cantidad++;
     } else {
         carrito.push(producto);
-
         localStorage.setItem("carrito", JSON.stringify(carrito));
     }
 
@@ -150,6 +143,8 @@ const mostrarCarrito = () => {
 
         const boton = document.getElementById(`eliminar${producto.idproducto}`);
         boton.addEventListener("click", () => {
+
+
             /* SWEET ALERT */
             Swal.fire({
                 title: '¿Desea eliminar este producto?',
@@ -178,6 +173,7 @@ const mostrarCarrito = () => {
         })
     })
 
+
     sumaTotal();
     pesoDolar();
 }
@@ -188,7 +184,9 @@ const eliminarDelCarrito = (id) => {
     carrito.splice(indice, 1);
     mostrarCarrito();
 
+
     localStorage.setItem("carrito", JSON.stringify(carrito));
+
 }
 
 const vaciarCarrito = document.getElementById("vaciarCarrito");
